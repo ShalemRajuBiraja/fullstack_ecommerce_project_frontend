@@ -1,0 +1,98 @@
+/* ACCOUNT DROPDOWN */
+
+.account-dropdown {
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.dropdown-menu-custom {
+    position: absolute;
+    top: 55px;
+    right: 0;
+
+    width: 300px;
+
+    background-color: white;
+    color: black;
+
+    border: 1px solid #ddd;
+    border-radius: 8px;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+
+    z-index: 9999;
+
+    overflow: hidden;
+
+    animation: dropdownFade 0.3s ease;
+}
+
+.account-menu {
+    background: white;
+}
+
+.account-title {
+    padding: 18px 20px;
+    margin: 0;
+
+    font-weight: 700;
+
+    border-bottom: 1px solid #eee;
+
+    text-align: left;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 16px 20px;
+
+    color: #333;
+    text-decoration: none;
+
+    transition: 0.2s;
+}
+
+.menu-item i {
+    font-size: 20px;
+}
+
+.menu-item span {
+    font-size: 16px;
+}
+
+.menu-item:hover {
+    background-color: #eaf4fc;
+    color: #2874f0;
+}
+
+.logout-item {
+    border-top: 1px solid #eee;
+}
+
+.dropdown-menu-custom::before {
+    content: "";
+
+    position: absolute;
+
+    top: -10px;
+    right: 40px;
+
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid white;
+}
+
+@keyframes dropdownFade {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
