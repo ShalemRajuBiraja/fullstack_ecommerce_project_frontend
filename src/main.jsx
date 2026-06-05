@@ -15,19 +15,21 @@ import ForgotPassword from './pages/ForgotPassword'
 import VerifyOtp from './pages/VerfifyOtp'
 import UpdatePassword from './pages/UpdatePassword'
 import Cart from './pages/Cart'
+import MyOrders from './pages/MyOrders'
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
      <Routes>
-        <Route path='/' element={<Home/>}/>
+        <Route path='/home' element={<Home/>}/>
         <Route path='/login' element={<LoginForm/>}/>
         <Route path='/create-account' element={<RegisterForm/>}/>
         <Route path='/forgotpassword' element={<ForgotPassword/>}/>
         <Route path='/verifyotp' element={<VerifyOtp/>}/>
         <Route path='/updatepassword' element={<UpdatePassword/>}/>
         <Route path='/cart' element={<Cart/>}/>
+        <Route path='/orders' element={<MyOrders/>}/>
       </Routes>
     </BrowserRouter>
   </StrictMode>,

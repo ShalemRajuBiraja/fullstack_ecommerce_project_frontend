@@ -160,10 +160,10 @@ const [isLoggedIn, setIsLoggedIn] = useState(false);
             </div>
 
             {/* Returns */}
-            <div className="nav-item-custom">
+            <Link to="/orders" className="nav-item-custom returns-section" style={{ textDecoration: "none", }}>
               <small>Returns</small>
               <strong>& Orders</strong>
-            </div>
+            </Link>
 
             {/* Cart */}
             <Link to="/cart" className="nav-item-custom cart-section" style={{ textDecoration: "none", }}>
