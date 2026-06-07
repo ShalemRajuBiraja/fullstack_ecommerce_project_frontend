@@ -16,12 +16,14 @@ import VerifyOtp from './pages/VerfifyOtp'
 import UpdatePassword from './pages/UpdatePassword'
 import Cart from './pages/Cart'
 import MyOrders from './pages/MyOrders'
+import { ToastContainer } from 'react-toastify';
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
      <Routes>
+        <Route path='/' element={<Home/>}/>
         <Route path='/home' element={<Home/>}/>
         <Route path='/login' element={<LoginForm/>}/>
         <Route path='/create-account' element={<RegisterForm/>}/>
@@ -31,6 +33,15 @@ createRoot(document.getElementById('root')).render(
         <Route path='/cart' element={<Cart/>}/>
         <Route path='/orders' element={<MyOrders/>}/>
       </Routes>
+     <ToastContainer
+      position="top-center"
+      autoClose={750}
+      hideProgressBar={false}
+      closeButton={false}
+      pauseOnHover
+      toastClassName="custom-toast"
+      bodyClassName="custom-toast-body"
+    />
     </BrowserRouter>
   </StrictMode>,
 )

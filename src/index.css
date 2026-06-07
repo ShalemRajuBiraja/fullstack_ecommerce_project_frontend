@@ -141,3 +141,41 @@ body {
 .footer-links li:hover {
     color: orange;
 }
+/* ── Custom Toast ── */
+.custom-toast {
+  background: #ffffff;
+  color: #1a1a2e;
+  border-radius: 10px;
+  border-left: 4px solid #fd7e14;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.10);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 12px 16px;
+  min-width: 280px;
+}
+
+.custom-toast-body {
+  padding: 0;
+  margin: 0;
+}
+
+/* Success */
+.Toastify__toast--success {
+  border-left: 4px solid #28a745 !important;
+}
+
+/* Error */
+.Toastify__toast--error {
+  border-left: 4px solid #dc3545 !important;
+}
+
+/* Warning */
+.Toastify__toast--warning {
+  border-left: 4px solid #fd7e14 !important;
+}
+
+/* Info */
+.Toastify__toast--info {
+  border-left: 4px solid #0dcaf0 !important;
+}

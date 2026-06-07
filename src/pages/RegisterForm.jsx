@@ -1,12 +1,18 @@
 import { useState } from "react";
 import "./RegisterForm.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
+
+const navigate = useNavigate();
+
   const [form, setForm] = useState({
-    name: "",
+    fullName: "",
     email: "",
-    mobile: "",
+    mobileNumber: "",
     password: "",
   });
   const [showPass, setShowPass] = useState(false);
@@ -15,11 +21,42 @@ const RegisterForm = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert(`Account created for: ${form.email}`);
-  };
+//1. ── Form submission with backend integration ── SIGNUP API CALLING
+  const handleCreateAccount = async (e) => {
 
+    e.preventDefault();
+
+    const apiData = {
+      fullName: form.fullName.trim(),
+      email: form.email.trim(),
+      mobileNumber: form.mobileNumber.trim(),
+      password: form.password,
+    }
+
+    try {
+        const response = await axios.post("http://localhost:8080/signup", apiData);
+
+        if (response.status === 200) {
+            toast.success("Account created successfully!");
+              navigate("/login");
+        }
+
+    } catch (error) {
+        if (error.response) {
+            // ── Validation errors from backend ──
+            const errors = error.response.data.errors;
+            if (errors) {
+                const firstError = Object.values(errors)[0];
+                toast.error(firstError);
+            } else {
+                // ── Duplicate email/mobile ──
+                toast.error(error.response.data.message);
+            }
+        } else {
+            toast.error("Server is not responding. Please try again!");
+        }
+    }
+};
   return (
     <div className="register-wrapper ">
       <div className="register-card mt-5 p-4">
@@ -44,10 +81,10 @@ const RegisterForm = () => {
             </span>
             <input
               type="text"
-              name="name"
+              name="fullName"
               className="register-input"
               placeholder="John Doe"
-              value={form.name}
+              value={form.fullName}
               onChange={handleChange}
               autoComplete="name"
             />
@@ -88,10 +125,10 @@ const RegisterForm = () => {
             </span>
             <input
               type="tel"
-              name="mobile"
+              name="mobileNumber"
               className="register-input"
               placeholder="+91 98765 43210"
-              value={form.mobile}
+              value={form.mobileNumber}
               onChange={handleChange}
               autoComplete="tel"
             />
@@ -140,7 +177,7 @@ const RegisterForm = () => {
         </div>
 
         {/* Create Account Button */}
-        <button className="btn-create-account" onClick={handleSubmit}>
+        <button className="btn-create-account" onClick={handleCreateAccount}>
           Create Account
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
             <line x1="5" y1="12" x2="19" y2="12"/>
