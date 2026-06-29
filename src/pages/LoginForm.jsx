@@ -38,7 +38,7 @@ const LoginForm = () => {
             //fake API response
             try{
 
-                const loginApiresponse = await loginapi(loginData);// ISSUES IS HERE 
+                const loginApiresponse = await loginapi(loginData);// ISSUES IS HERE  i ues {} thats why error
 
                   if(loginApiresponse?.data?.success){
                           localStorage.setItem("userData", JSON.stringify(loginApiresponse.data.data.userData));
@@ -47,11 +47,10 @@ const LoginForm = () => {
                           // window.location = '/';
                     }
             }catch(error){
-                console.log(error); // see error in console
-                console.log(error?.response); // see error response in console
+                console.log(error.response.data.message); // see error response in console
                 setLoginErrors({...loginErrors, apiError : true});
-                toast.error("Login failed. Please try again.");
-                                   
+                toast.error(error.response.data.message);
+                                    
             } 
         }
     }
