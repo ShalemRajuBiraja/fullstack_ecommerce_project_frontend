@@ -15,7 +15,6 @@ import ForgotPassword from './pages/ForgotPassword'
 import VerifyOtp from './pages/VerfifyOtp'
 import UpdatePassword from './pages/UpdatePassword'
 import Cart from './pages/Cart'
-import MyOrders from './pages/MyOrders'
 import { ToastContainer } from 'react-toastify';
 
 
@@ -31,7 +30,7 @@ createRoot(document.getElementById('root')).render(
         <Route path='/verifyotp' element={<VerifyOtp/>}/>
         <Route path='/updatepassword' element={<UpdatePassword/>}/>
         <Route path='/cart' element={<Cart/>}/>
-        <Route path='/orders' element={<MyOrders/>}/>
+        {/* <Route path='/orders' element={</>}/> */}
       </Routes>
      <ToastContainer
       position="top-center"

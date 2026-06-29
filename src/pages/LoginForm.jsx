@@ -1,17 +1,60 @@
 import { useState } from "react";
 import "./LoginForm.css";
 import { Link } from "react-router-dom";
+import {isEmailValid} from "../utils/Reusablecode";
+import {loginapi} from "../services/AuthService";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  
+  const [loginData, setLoginData] = useState({email : "", password : ""});
+  const [loginErrors, setLoginErrors] = useState({email : false, password : false, apiError : false});
   const [showPass, setShowPass] = useState(false);
+  const navigate = useNavigate();
 
-  const handleContinue = (e) => {
-    e.preventDefault();
-    alert(`Signing up as: ${email}`);
-  };
 
+  const handleLogin =  async () => {
+        let tempErrors = {};
+        let hasErrors = false;
+
+        if(isEmailValid(loginData.email) == false){
+                hasErrors = true;
+            tempErrors = {...tempErrors,email : true};
+        } else {
+            tempErrors = {...tempErrors, email: false};
+        }
+        if(loginData.password.length < 6){
+                hasErrors = true;
+            tempErrors = {...tempErrors, password : true};
+        }else {
+            tempErrors = {...tempErrors, password: false};
+        }
+  
+        setLoginErrors({tempErrors});
+
+        if(hasErrors == false){
+            //API call
+            //fake API response
+            try{
+
+                const loginApiresponse = await loginapi(loginData);// ISSUES IS HERE 
+
+                  if(loginApiresponse?.data?.success){
+                          localStorage.setItem("userData", JSON.stringify(loginApiresponse.data.data.userData));
+                          localStorage.setItem("token", loginApiresponse.data.data.token)
+                          navigate("/home");
+                          // window.location = '/';
+                    }
+            }catch(error){
+                console.log(error); // see error in console
+                console.log(error?.response); // see error response in console
+                setLoginErrors({...loginErrors, apiError : true});
+                toast.error("Login failed. Please try again.");
+                                   
+            } 
+        }
+    }
   return (
     <div className="login-wrapper">
       <div className="login-card mt-3 mb-3">
@@ -41,10 +84,13 @@ const LoginForm = () => {
                 type="email"
                 className="login-input"
                 placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={loginData.email}
+                onChange={(e) => setLoginData({...loginData, email : e.target.value})}
                 autoComplete="email"
               />
+              {
+                loginErrors.email && <span className="error-text">Email is Invalid</span>
+              }
             </div>
           </div>
 
@@ -66,10 +112,13 @@ const LoginForm = () => {
                 type={showPass ? "text" : "password"}
                 className="login-input"
                 placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={loginData.password}
+                onChange={(e) => setLoginData({...loginData, password : e.target.value})}
                 autoComplete="current-password"
               />
+              {
+                loginErrors.password && <span className="error-text">Password must be at least 6 characters</span>
+              }
               <button
                 type="button"
                 className="toggle-pass"
@@ -93,7 +142,7 @@ const LoginForm = () => {
           </div>
 
           {/* Continue Button */}
-          <button className="btn-continue" onClick={handleContinue}>
+          <button className="btn-continue" onClick={handleLogin}>
             Continue
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <line x1="5" y1="12" x2="19" y2="12"/>

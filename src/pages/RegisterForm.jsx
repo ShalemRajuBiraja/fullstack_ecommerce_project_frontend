@@ -1,9 +1,9 @@
 import { useState } from "react";
 import "./RegisterForm.css";
 import { Link, Navigate } from "react-router-dom";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import {signupapi} from "../services/AuthService";
 
 const RegisterForm = () => {
 
@@ -34,7 +34,7 @@ const navigate = useNavigate();
     }
 
     try {
-        const response = await axios.post("http://localhost:8080/signup", apiData);
+        const response = await signupapi(apiData);
 
         if (response.status === 200) {
             toast.success("Account created successfully!");
@@ -42,6 +42,7 @@ const navigate = useNavigate();
         }
 
     } catch (error) {
+      console.log(error);
         if (error.response) {
             // ── Validation errors from backend ──
             const errors = error.response.data.errors;

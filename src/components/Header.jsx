@@ -1,12 +1,18 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
+import { checkUserLoggedInStatus } from "../utils/Reusablecode";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 
 const Header = () => {
 
 const [showDropdown, setShowDropdown] = useState(false);
 const timeoutRef = useRef(null);
-const [isLoggedIn, setIsLoggedIn] = useState(false); 
+const isLoggedIn = checkUserLoggedInStatus();
+const navigate = useNavigate();
+
 
       const handleMouseEnter = () => {
             clearTimeout(timeoutRef.current);
@@ -19,11 +25,16 @@ const [isLoggedIn, setIsLoggedIn] = useState(false);
             }, 300);
       };
 
+const handleLogout = () =>{
+  localStorage.clear();
+  toast("Logout successfull");
+  navigate("/Login")
+}
 
   return (
     <>
       {/* Main Navbar */}
-      <nav className="navbar navbar-expand-lg amazon-navbar">
+      <nav className="navbar navbar-expand-lg amazon-navbar sticky-top">
         <div className="container-fluid">
 
           {/* Logo */}
@@ -100,15 +111,14 @@ const [isLoggedIn, setIsLoggedIn] = useState(false);
                         !isLoggedIn && (
                         <div>
                            <h5 className="account-title text-center"> Welcome to Amazon!</h5>
-                          <button type="button" className="btn text-light"><Link to="/login" className="rp-link">Sign in</Link></button>
+                          <button type="button" className="btn text-light"><Link to="/login" className="rp-link">Login in</Link></button>
                           <small className="d-block mt-2">New customer? <Link to="/create-account" className="rp-link">Start here.</Link></small>
                         </div>
                         )
                        }
 
                         {isLoggedIn && (
-                          <div>
-
+                        <div>
                         <Link to="/profile" className="menu-item">
                           <i className="bi bi-person-circle"></i>
                           <span>My Profile</span>
@@ -144,12 +154,9 @@ const [isLoggedIn, setIsLoggedIn] = useState(false);
                           <span>Gift Cards</span>
                         </Link>
 
-                        <Link to="/logout" className="menu-item logout-item">
-                          <i className="bi bi-box-arrow-right"></i>
-                          <span>Logout</span>
-                        </Link>
-
-                          </div>
+                       <button type="button" className="btn btn-danger bm-3 " onClick={handleLogout}>Logout ➡️</button>
+                       
+                      </div>
                          )
                         }
                         

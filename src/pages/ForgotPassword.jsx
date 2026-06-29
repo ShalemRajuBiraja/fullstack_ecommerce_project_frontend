@@ -1,13 +1,23 @@
 import { useState } from "react";
 import "./ForgotPassword.css";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
+
+
 
 const ForgotPassword = () => {
+
   const [email, setEmail] = useState("");
+  const navigate = useNavigate();
+
 
   const handleSendOtp = () => {
     if (!email) return alert("Please enter your email.");
-    alert(`OTP sent to: ${email}`);
+    // alert(`OTP sent to: ${email}`);
+    toast("OTP sent to : " + email);
+    navigate("/VerifyOtp");
   };
 
   return (

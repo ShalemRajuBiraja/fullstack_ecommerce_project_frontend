@@ -96,7 +96,7 @@ const VerifyOtp = () => {
 
         <p className="rp-redirect">
           Back to{" "}
-          <Link to="/forgot-password" className="rp-link">
+          <Link to="/forgotpassword" className="rp-link">
             Forgot Password
           </Link>
         </p>
