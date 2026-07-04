@@ -1,39 +1,39 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import "./Cart.css";
 import { Link } from "react-router-dom";
 
-const initialItems = [
-  {
-    id: 1,
-    name: "Premium Wireless Headphones",
-    brand: "SoundCore",
-    price: 2999,
-    qty: 1,
-    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=120&h=120&fit=crop",
-    color: "Midnight Black",
-  },
-  {
-    id: 2,
-    name: "Slim Fit Casual Sneakers",
-    brand: "UrbanStep",
-    price: 1499,
-    qty: 2,
-    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=120&h=120&fit=crop",
-    color: "Cloud White",
-  },
-  {
-    id: 3,
-    name: "Minimalist Leather Watch",
-    brand: "TimeCraft",
-    price: 4599,
-    qty: 1,
-    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=120&h=120&fit=crop",
-    color: "Tan Brown",
-  },
-];
 
 const Cart = () => {
-  const [items, setItems] = useState(initialItems);
+  
+  //variables
+  const [cartItems, setCartItems] = useState([]);
+  const [loading, setLoading]     = useState(true);
+  const [error, setError]         = useState(null);
+
+useEffect(() => {
+    const fetchCart = async () => {
+        try {
+            setLoading(true);
+            const response = await getCart();   // from cartService.js
+            setCartItems(response.data);
+
+        } catch (error) {
+            console.error("Error fetching cart:", error);
+            setError("Failed to load cart items");
+
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    fetchCart();
+}, []);
+
+
+
+
+
+
 
   const updateQty = (id, delta) => {
     setItems((prev) =>

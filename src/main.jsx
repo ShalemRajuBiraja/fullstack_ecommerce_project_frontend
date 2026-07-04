@@ -24,8 +24,8 @@ createRoot(document.getElementById('root')).render(
      <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/home' element={<Home/>}/>
-        <Route path='/login' element={<LoginForm/>}/>
-        <Route path='/create-account' element={<RegisterForm/>}/>
+        <Route path='/auth/login' element={<LoginForm/>}/>
+        <Route path='/auth/create-account' element={<RegisterForm/>}/>
         <Route path='/forgotpassword' element={<ForgotPassword/>}/>
         <Route path='/verifyotp' element={<VerifyOtp/>}/>
         <Route path='/updatepassword' element={<UpdatePassword/>}/>

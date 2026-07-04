@@ -5,6 +5,8 @@ export const API_END_POINTS = {
     signup : '/auth/create-account',
     signout : '/auth/signout',
     products : '/products',
-    productDetails : '/products/:id'
+    productDetails : '/products/:id',
+    cart : "/getCartItems",
+    addtocart : "/addtoCart"
 
 }

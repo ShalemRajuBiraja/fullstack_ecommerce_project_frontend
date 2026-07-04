@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "./Home.css";
 import { toast } from "react-toastify";
+import {addToCartApi} from "../services/Cart.Service";
 
 
 // ── Single Product Card ──────────────────────────────────
@@ -11,10 +12,22 @@ import { toast } from "react-toastify";
 const ProductCard = ({ product }) => {
 
   // ── Add to Cart button handler ───────────────────────────
-  const handleAddToCart = (product) => {
-    // alert("Product added to cart!");
-    toast("Product added to cart");
-    console.log("Added to cart:", product);
+  const handleAddToCart = async (product) => {
+    const apidata = {
+      productId : product.productId,
+      quantity : 1
+    };
+
+    try {
+      const apiData = await addToCartApi(apidata);
+      if(apiData.data.success === true){
+        toast.success("Added to Cart");
+      }
+
+    } catch (error){
+      console.log(error.response.data);
+      toast.error("Add to Cart failed");
+    }
   };
 
   

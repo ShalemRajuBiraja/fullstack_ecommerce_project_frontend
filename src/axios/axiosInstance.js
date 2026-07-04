@@ -17,19 +17,45 @@ axiosInstance.interceptors.request.use(
     },
     (error) => Promise.reject(error)
 );
+
 // Response interceptor
 axiosInstance.interceptors.response.use(
 
-    response => {
-        if (response.headers[AUTH_CONFIG.AUTHORIZATION] !== undefined) {
-            localStorage.removeItem(AUTH_CONFIG.TOKEN);
-     
-        }
+    // SUCCESS RESPONSE
+    (response) => {
+
         return response;
+
     },
-    error => {
-      return Promise.reject(error)
- }
+
+    // ERROR RESPONSE
+    (error) => {
+
+    // Token expired / Invalid token / Unauthorized
+        if(error.response?.status === 401){
+
+            localStorage.removeItem("token");
+            localStorage.removeItem("userData");
+
+            window.location.href = "/login";
+
+        }
+
+        // Forbidden (role issue)
+        else if(error.response?.status === 403){
+
+            console.log("Access denied");
+        }
+
+        // Backend server error
+        else if(error.response?.status === 500){
+
+            console.log("Server Error");
+        }
+
+        return Promise.reject(error);
+    }
+
 );
 
 

@@ -28,7 +28,7 @@ const navigate = useNavigate();
 const handleLogout = () =>{
   localStorage.clear();
   toast("Logout successfull");
-  navigate("/Login")
+  navigate("/auth/login")
 }
 
   return (
@@ -111,8 +111,8 @@ const handleLogout = () =>{
                         !isLoggedIn && (
                         <div>
                            <h5 className="account-title text-center"> Welcome to Amazon!</h5>
-                          <button type="button" className="btn text-light"><Link to="/login" className="rp-link">Login in</Link></button>
-                          <small className="d-block mt-2">New customer? <Link to="/create-account" className="rp-link">Start here.</Link></small>
+                          <button type="button" className="btn text-light"><Link to="/auth/login" className="rp-link">Login in</Link></button>
+                          <small className="d-block mt-2">New customer? <Link to="/auth/create-account" className="rp-link">Start here.</Link></small>
                         </div>
                         )
                        }
